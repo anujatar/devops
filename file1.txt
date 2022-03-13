@@ -1,3 +1,4 @@
 file 1 content
 my second line
 my second line
+Added third line
