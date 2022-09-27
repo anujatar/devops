@@ -1,0 +1,274 @@
+-- MySQL Administrator dump 1.4
+--
+-- ------------------------------------------------------
+-- Server version	5.5.3-m3-community
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+--
+-- Create schema ignite390
+--
+
+CREATE DATABASE IF NOT EXISTS ignite390;
+USE ignite390;
+
+--
+-- Definition of table `cart`
+--
+
+DROP TABLE IF EXISTS `cart`;
+CREATE TABLE `cart` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `pid` int(15) unsigned NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `quqntity` varchar(45) NOT NULL,
+  `price` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `FK_cart_1` (`pid`),
+  KEY `FK_cart_2` (`email`),
+  CONSTRAINT `FK_cart_1` FOREIGN KEY (`pid`) REFERENCES `product` (`P_Id`),
+  CONSTRAINT `FK_cart_2` FOREIGN KEY (`email`) REFERENCES `userdetail` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `cart`
+--
+
+/*!40000 ALTER TABLE `cart` DISABLE KEYS */;
+INSERT INTO `cart` (`id`,`pid`,`email`,`quqntity`,`price`) VALUES 
+ (2,1,'DEBO@TCS.COM','1','800');
+/*!40000 ALTER TABLE `cart` ENABLE KEYS */;
+
+
+--
+-- Definition of table `category`
+--
+
+DROP TABLE IF EXISTS `category`;
+CREATE TABLE `category` (
+  `Category_Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `Category_Name` varchar(45) NOT NULL,
+  PRIMARY KEY (`Category_Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `category`
+--
+
+/*!40000 ALTER TABLE `category` DISABLE KEYS */;
+INSERT INTO `category` (`Category_Id`,`Category_Name`) VALUES 
+ (1,'Formal'),
+ (2,'Causual'),
+ (3,'kurta'),
+ (5,'Sherwani');
+/*!40000 ALTER TABLE `category` ENABLE KEYS */;
+
+
+--
+-- Definition of table `feedback`
+--
+
+DROP TABLE IF EXISTS `feedback`;
+CREATE TABLE `feedback` (
+  `f_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `email` varchar(45) NOT NULL,
+  `Pasword` varchar(45) NOT NULL,
+  `message` varchar(45) NOT NULL,
+  PRIMARY KEY (`f_id`),
+  KEY `FK_feedback_1` (`email`),
+  CONSTRAINT `FK_feedback_1` FOREIGN KEY (`email`) REFERENCES `userdetail` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `feedback`
+--
+
+/*!40000 ALTER TABLE `feedback` DISABLE KEYS */;
+INSERT INTO `feedback` (`f_id`,`email`,`Pasword`,`message`) VALUES 
+ (1,'m.munaffer@tcs.com','Munaffer@12','good...'),
+ (5,'tiwari.sharmi@gmail.com','Sharmila@12','Very Good...'),
+ (6,'tiwari.sharmi@gmail.com','Sharmila@12','okkk.....'),
+ (8,'m.munaffer@tcs.com','Munaffer@12','gsetseysey'),
+ (9,'m.munaffer@tcs.com','Munaffer@12','gsetseysey'),
+ (10,'m.munaffer@tcs.com','Munaffer@12','gsetseysey'),
+ (11,'m.munaffer@tcs.com','Munaffer@12','bgjhghjgjhgjh'),
+ (12,'m.munaffer@tcs.com','Munaffer@1','xzvcsdg');
+/*!40000 ALTER TABLE `feedback` ENABLE KEYS */;
+
+
+--
+-- Definition of table `orderdetails`
+--
+
+DROP TABLE IF EXISTS `orderdetails`;
+CREATE TABLE `orderdetails` (
+  `o_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `p_id` int(10) unsigned NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `address` varchar(200) NOT NULL,
+  `contact` varchar(10) NOT NULL,
+  `quantity` varchar(45) NOT NULL,
+  `total` varchar(45) NOT NULL,
+  `grand_total` varchar(45) NOT NULL,
+  `date` datetime NOT NULL,
+  PRIMARY KEY (`o_id`) USING BTREE,
+  KEY `email` (`p_id`) USING BTREE,
+  KEY `FK_order_2` (`email`),
+  CONSTRAINT `FK_order_2` FOREIGN KEY (`email`) REFERENCES `userdetail` (`email`),
+  CONSTRAINT `P_Id` FOREIGN KEY (`p_id`) REFERENCES `product` (`P_Id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `orderdetails`
+--
+
+/*!40000 ALTER TABLE `orderdetails` DISABLE KEYS */;
+/*!40000 ALTER TABLE `orderdetails` ENABLE KEYS */;
+
+
+--
+-- Definition of table `product`
+--
+
+DROP TABLE IF EXISTS `product`;
+CREATE TABLE `product` (
+  `P_Id` int(15) unsigned NOT NULL AUTO_INCREMENT,
+  `Category_Id` int(15) unsigned NOT NULL,
+  `Signature_Name` varchar(45) NOT NULL,
+  `Description` varchar(45) NOT NULL,
+  `Price` varchar(45) NOT NULL,
+  `Discount` varchar(45) NOT NULL,
+  `Image` varchar(100) NOT NULL,
+  PRIMARY KEY (`P_Id`),
+  KEY `Category_Id` (`Category_Id`),
+  CONSTRAINT `Category_Id` FOREIGN KEY (`Category_Id`) REFERENCES `category` (`Category_Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `product`
+--
+
+/*!40000 ALTER TABLE `product` DISABLE KEYS */;
+INSERT INTO `product` (`P_Id`,`Category_Id`,`Signature_Name`,`Description`,`Price`,`Discount`,`Image`) VALUES 
+ (1,1,'LEVI\'S','40','800','5%','img/1.jpg'),
+ (2,1,'LEVI\'S','50','1000','10','img/2.jpg'),
+ (3,5,'PUMA','38','1200','5%','img/3.jpg'),
+ (4,5,'SEVEN ELEVEN','26','800','7%','img/4.jpg'),
+ (5,5,'ADIDAS','36','1500','6%','img/5.jpg'),
+ (6,5,'PUMA','30','1200','10%','img/6.jpg'),
+ (7,5,'LEVI\'S','32','1300','12%','img/7.jpg'),
+ (8,5,'REEBOK','26','1500','10%','img/8.jpg'),
+ (9,5,'PUMA','32','1600','15%','img/9.jpg'),
+ (10,1,'LEVI\'S','32','1200','5%','img/1_1.jpg'),
+ (11,1,'PUMA','36','800','7%','img/2_1.jpg'),
+ (12,1,'REEBOK','32','600','4%','img/3_1.jpg'),
+ (13,1,'REEBOK','30','800','2%','img/4_1.jpg'),
+ (14,1,'PUMA','30','700','6%','img/11_1.jpg'),
+ (15,1,'ADIDAS','32','1500','5%','img/12_1.jpg'),
+ (16,1,'LEVI\'S','34','1400','10%','img/13_1.jpg'),
+ (17,1,'SEVEN ELEVEN','34','1300','8%','img/14_1.jpg'),
+ (18,1,'ADIDAS','32','1000','5%','img/15_1.jpg'),
+ (19,2,'ADIDAS','30','1200','0%','img/21_1.jpg'),
+ (20,2,'LEVI\'S','28','1400','5%','img/22.jpg'),
+ (21,2,'adidas','30','1200','3%','img/11_1.jpg'),
+ (22,2,'PUMA','32','900','4%','img/11_1.jpg'),
+ (23,2,'PUMA','30','800','6%','img/24.jpg'),
+ (24,2,'LEVI\'S','32','900','5%','img/20.jpg'),
+ (25,2,'PUMA','30','1500','3%','img/22.jpg'),
+ (26,2,'PUMA','36','1600','5%','img/25.jpg'),
+ (27,3,'LEVI\'S','36','3000','5%','img/41.jpg'),
+ (28,3,'PUMA','36','2600','4%','img/31.jpg'),
+ (29,3,'REEBOK','38','2500','5%','img/32.jpeg'),
+ (30,3,'DUKE','36','2600','10%','img/33.jpg'),
+ (31,3,'COTTON COUNTY','30','1900','8%','img/34.jpeg'),
+ (32,3,'REEBOK','32','2200','4%','img/35.jpeg'),
+ (33,3,'DUKE','30','2100','6%','img/36.jpeg'),
+ (34,3,'PUMA','34','2800','10%','img/39.jpeg'),
+ (35,3,'LEVI\'S','36','3600','10%','img/37.jpg');
+/*!40000 ALTER TABLE `product` ENABLE KEYS */;
+
+
+--
+-- Definition of table `shipping`
+--
+
+DROP TABLE IF EXISTS `shipping`;
+CREATE TABLE `shipping` (
+  `o_id` int(3) unsigned NOT NULL AUTO_INCREMENT,
+  `f_name` varchar(45) NOT NULL,
+  `l_name` varchar(45) NOT NULL,
+  `address` varchar(45) NOT NULL,
+  `email` varchar(45) NOT NULL,
+  `city` varchar(45) NOT NULL,
+  `state` varchar(45) NOT NULL,
+  `zipcode` varchar(45) NOT NULL,
+  PRIMARY KEY (`o_id`),
+  KEY `email` (`email`),
+  CONSTRAINT `email` FOREIGN KEY (`email`) REFERENCES `userdetail` (`email`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `shipping`
+--
+
+/*!40000 ALTER TABLE `shipping` DISABLE KEYS */;
+/*!40000 ALTER TABLE `shipping` ENABLE KEYS */;
+
+
+--
+-- Definition of table `userdetail`
+--
+
+DROP TABLE IF EXISTS `userdetail`;
+CREATE TABLE `userdetail` (
+  `F_Name` varchar(20) NOT NULL,
+  `L_Name` varchar(20) NOT NULL,
+  `email` varchar(30) NOT NULL,
+  `U_Name` varchar(20) NOT NULL,
+  `Pasword` varchar(20) NOT NULL,
+  PRIMARY KEY (`email`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `userdetail`
+--
+
+/*!40000 ALTER TABLE `userdetail` DISABLE KEYS */;
+INSERT INTO `userdetail` (`F_Name`,`L_Name`,`email`,`U_Name`,`Pasword`) VALUES 
+ ('vfasf','szgfx','cdasf@gmail.com','SDGS','tCS#1234'),
+ ('srita','srita','DEBO@TCS.COM','DB','tCS#1234'),
+ ('Deepak','Kumar','deepakkumar@tcs.com','dk','1234#Tcs'),
+ ('GSDGS','VSDG','FASF@GMAIL.COM','DAWDF','tCS#1234'),
+ ('gvsd','gsdgsdyhd','gdxgd@tcs.com','fherhy','Tcs#1234'),
+ ('gvsd','gsdgsdyhd','gdxgdhj@tcs.com','fherhy','Tcs#1234'),
+ ('gvsd','gsdgsdyhd','gdxgdhjjfgj@tcs.com','fherhy','Tcs#1234'),
+ ('YERY','ERSRHYYRD','GDZSYG@TCS.COM','SFARFT','tCS#1234'),
+ ('Munaffer','Khan','m.munaffer@tcs.com','MK','Munaffer@12'),
+ ('fasfsf','sdfgsdfq','sdfgsd@tvs.com','fsf','Tcs#1234'),
+ ('uydryrdy','ghdfydryr','sfsdf@tcs.com','fasf','Tcs#1234'),
+ ('Soumya','Jena','soumya.jena22@tcs.com','soumya','Tcs#1234'),
+ ('Soumya','Jena','soumya.jena2@tcs.com','soumya','Tcs#1234'),
+ ('Sharmila','Tiwari','tiwari.sharmi@gmail.com','sharmila','Sharmi@12'),
+ ('Tushar','Shukla','tshrshukal79@gmail.com','tshr','Tcs#1234'),
+ ('ccvzsf','vzsvgfzx','zxc@tcs.com','sad','Tcs#1234');
+/*!40000 ALTER TABLE `userdetail` ENABLE KEYS */;
+
+
+
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,0 +1,25 @@
+.id4
+{
+    margin-left:20px;
+}
+.id
+{
+    float:right;
+}
+.id1
+{
+    margin-left: 140px;
+}
+.id2
+{
+    height:200px;
+}
+.bottom
+{
+    background-color: #F5F5F5;
+    border: 1px solid #E3E3E3;
+    border-radius: 4px 4px 4px 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+    min-height: 150px;
+    padding: 19px;    
+}
